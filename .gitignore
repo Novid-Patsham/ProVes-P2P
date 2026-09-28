@@ -1,0 +1,11 @@
+node_modules
+.vercel
+dist
+screenshots
+*.db
+.grok
+.env
+.env.*
+!.env.example
+__pycache__
+*.pyc
