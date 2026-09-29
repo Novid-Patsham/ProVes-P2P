@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,520;6..72,650&family=Source+Sans+3:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Newsreader", Georgia, serif;
+  --color-bg: #0b1420;
+  --color-surface: #132033;
+  --color-raised: #1a2c44;
+  --color-line: #2c415c;
+  --color-fg: #e8eef6;
+  --color-muted: #93a4bb;
+  --color-brass: #d4a017;
+  --color-brass-ink: #1c1504;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  html,
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+  .field {
+    width: 100%;
+    min-height: 2.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-bg);
+    color: var(--color-fg);
+    padding: 0 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
