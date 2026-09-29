@@ -203,7 +203,7 @@ export const useP2p = create<State>()(
                 reasoning,
                 exceptions:
                   r.source === "MANUAL" && calc.recommended !== r.requestedQty
-                    ? ["Requested quantity differs from the model \u2014 buyer can still override later"]
+                    ? ["Requested quantity differs from the model — buyer can still override later"]
                     : [],
               },
             ],
@@ -260,7 +260,7 @@ export const useP2p = create<State>()(
                 recommendation: "Simulated quotes captured from the approved panel",
                 reasoning: quotes.map((q) => {
                   const v = vendors.find((x) => x.id === q.vendorId)!;
-                  return `${v.code}: ${q.unitPrice} in ${q.leadDays}d \u2014 ${q.notes}`;
+                  return `${v.code}: ${q.unitPrice} in ${q.leadDays}d — ${q.notes}`;
                 }),
                 exceptions: quotes.filter((q) => !q.compliant).map((q) => `${vendors.find((v) => v.id === q.vendorId)?.code} non-compliant`),
               },
@@ -303,7 +303,7 @@ export const useP2p = create<State>()(
                   "Late quotes stay out of the award.",
                   `${vendor.name} can reach ${r.deliveryPort} in ${quote.leadDays} days.`,
                   itemById(r.itemId).critical
-                    ? "Critical spare \u2014 buyer and superintendent must both sign."
+                    ? "Critical spare — buyer and superintendent must both sign."
                     : "Buyer approval is required before issue.",
                 ],
                 exceptions: [],
@@ -319,7 +319,7 @@ export const useP2p = create<State>()(
           stock: applyInbound(get().stock, get().reqs.find((r) => r.id === id), true),
           audit: log(get().audit, "Buyer", "PO approval", id),
         });
-        // inbound applied inside issue only once \u2014 fix double. I'll recompute carefully below.
+        // inbound applied inside issue only once — fix double. I'll recompute carefully below.
       },
       approveTech: (id) => {
         const req = get().reqs.find((r) => r.id === id);
@@ -382,7 +382,7 @@ export const useP2p = create<State>()(
               {
                 step: "Receipt",
                 provider: get().provider,
-                recommendation: match.ok ? "Receipt matches the purchase order" : "Discrepancy \u2014 do not close",
+                recommendation: match.ok ? "Receipt matches the purchase order" : "Discrepancy — do not close",
                 reasoning: [`Received ${qty} of ${r.po?.qty} in condition ${condition}.`, "ROB updated for the received quantity only."],
                 exceptions: match.flags,
               },
@@ -417,7 +417,7 @@ export const useP2p = create<State>()(
               {
                 step: "Invoice",
                 provider: get().provider,
-                recommendation: match.ok ? "Three-way match is clean" : "Match failed \u2014 payment blocked",
+                recommendation: match.ok ? "Three-way match is clean" : "Match failed — payment blocked",
                 reasoning: ["Compared invoice quantity and price to the purchase order and the goods receipt."],
                 exceptions: match.flags,
               },
@@ -476,7 +476,7 @@ function applyInbound(stock: StockRow[], req: Requisition | undefined, buyerJust
   if (!req?.po || !buyerJustApproved) return stock;
   const critical = itemById(req.itemId).critical;
   const willIssue = req.po.buyerApproved === false && (!critical || req.po.techApproved);
-  // called BEFORE patch in approveBuyer \u2014 buyerApproved is still false
+  // called BEFORE patch in approveBuyer — buyerApproved is still false
   if (!willIssue) return stock;
   if (req.po.status === "ISSUED") return stock;
   return stock.map((s) =>
